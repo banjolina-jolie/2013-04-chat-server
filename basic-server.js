@@ -19,7 +19,7 @@ var requestListener = function (request, response) {
    * below about CORS. */
   var headers = defaultCorsHeaders;
 
-  headers['Content-Type'] = "application/json";
+  headers['Content-Type'] = "text/plain";
 
   /* Response is an http.ServerRespone object containing methods for
    * writing our response to the client. Documentation for both request

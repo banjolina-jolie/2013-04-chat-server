@@ -6,6 +6,6 @@
 
 // exports.handleRequest =
 exports.handleRequest = function(request, response) {
-  console.log("SHNUR");
+  return "Shnuur";
 
 };
