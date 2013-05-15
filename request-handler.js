@@ -4,6 +4,8 @@
  * from this file and include it in basic-server.js. Check out the
  * node module documentation at http://nodejs.org/api/modules.html. */
 
-var handleRequest = function(request, response) {
+// exports.handleRequest =
+exports.handleRequest = function(request, response) {
+  console.log("SHNUR");
 
 };
