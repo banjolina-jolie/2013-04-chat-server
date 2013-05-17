@@ -1,0 +1,23 @@
+Node.js  --  Server Side JavaScript
+
+In order to start using node to create a basic server, the first line of code involves importing Node's http module (var http = require("http")), declaring the IP address and port number, and calling http.createServer().  Inside this function, we will pass an request-handler argument, but we will cover that in the next paragraph.  The last thing to do in order to complete our basic server code is to call http.createServer(requestHandler).listen(IP, port).
+
+The request handler is a function declared in another file called request-handler.js. That file starts with:
+
+exports.requestHandler = function(request, response){
+	~~lots of stuff~~
+};
+
+the 'exports' prefix makes the function 'requestHandler' accessable by any file calling 'require' on the file that holds the request-handler function.  So in our basic server code, the argument of the createServer function is actually 'handler.requestHandler' in which 'handler' is defined as:
+
+var handler = require("./request-handler.js");
+
+So now that we've linked our basic server to our request-handler, let's discuss what the request-handler is doing.
+
+First, the request-handler interprets which action the client wishes to engage in with the server.  Usually these are "GET" and "POST" but a few others exist also.
+
+"GET" means that the client wishes to simply access data on the server and "POST" means that the client wishes to add data to the server.  In the case of "POST", data comes in as chunks.  The request handler listens for 'data' events triggered and concatenates all that data until an 'end' event is triggered.
+
+In any type of client-server interaction, the server will respond with a 3-digit status code.  Status codes in the 200s generally mean that things are working as expected.  The dreaded 404 means that the url specified by the client could not be found.  The status code is found in the header of the response along with some other elements such as content-type and CORS (cross-origin resource sharing) specifications.
+
+To get your server up and running, head to the terminal and just type "node (file name of basic server code)" and hit enter.  Voila, you're server should start listening!
