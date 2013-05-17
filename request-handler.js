@@ -5,7 +5,7 @@
  * node module documentation at http://nodejs.org/api/modules.html. */
 var messages = [];
 // exports.handleRequest =
-module.exports = function(request, response) {  
+exports.handleRequest = function(request, response) {
   /* Request is an http.ServerRequest object containing various data
    * about the client request - such as what URL the browser is
    * requesting. */
@@ -33,28 +33,36 @@ module.exports = function(request, response) {
   var headers = defaultCorsHeaders;
   headers['Content-Type'] = "application/json";
 
+  // If the URL doesn't match the expected URL, reutrn a 404
+    var desiredResponse = {
+      results: messages
+    };
   if(request.method === "OPTIONS"){
     response.writeHead(200, headers);
     response.end();
   }
   else if(request.method === 'GET'){
-    response.writeHead(200, headers);
+    if(request.url.indexOf('classes')!==-1){
+      response.writeHead(200, headers);
+      response.end(JSON.stringify(desiredResponse));
+    }
+    else{
+      response.writeHead(404, headers);
+      response.end();
+    }
+    console.log(request.url);
 
-    var desiredResponse = {
-      results: messages
-    };
-
-    response.end(JSON.stringify(desiredResponse));
   }
   else if(request.method === 'POST'){
-    response.writeHead(200, headers); // Doesn't happen after 'end' event (async)
+    console.log('posting');
+    response.writeHead(201, headers); // Doesn't happen after 'end' event (async)
     var message = '';
     request.on('data', function(data){
-      message+= data;
+      message += data;
     });
     request.on('end', function(){
       messages.push(JSON.parse(message));
-      response.end();
+      response.end('\n');
     });
   }
 
